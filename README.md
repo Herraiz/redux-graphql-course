@@ -12,3 +12,5 @@ En este curso veremos:
 Enlace al curso: https://www.udemy.com/course/aprende-redux-con-react-hooks-y-graphql-facilmente/
 
 Por lo general, una rama por cada sección y un commit por cada clase
+
+Para iniciarlo, usa yarn install y yarn start.
