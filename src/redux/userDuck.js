@@ -1,14 +1,15 @@
 // Constants
-let initialData = {
+const initialData = {
   loggedIn: false,
 };
-let LOGIN = "LOGIN";
+const LOGIN = "LOGIN";
+
 // Reducer
 
 export default function reducer(state = initialData, action) {
   switch (action.type) {
     case LOGIN:
-    //   return { ...state, loggedIn: true };
+      return { ...state, loggedIn: true };
     default:
       return state;
   }
