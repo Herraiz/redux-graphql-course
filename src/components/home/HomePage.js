@@ -2,9 +2,16 @@ import React from "react";
 import Card from "../card/Card";
 import styles from "./home.module.css";
 import { connect } from "react-redux";
+import { removeCharacterAction } from "../../redux/charsDuck";
 
-function Home({ characters, fetching, error }) {
+function Home({ characters = [], fetching, error, removeCharacterAction }) {
+  function handleLeftClick() {
+    removeCharacterAction(0);
+  }
+
   function renderCharacter() {
+    const char = characters[0];
+
     if (fetching) {
       return <div>Cargando personajes...</div>;
     }
@@ -17,7 +24,7 @@ function Home({ characters, fetching, error }) {
       return <div>No hay personajes disponibles</div>;
     }
 
-    return <Card {...characters[0]} />;
+    return <Card {...char} leftClick={handleLeftClick} />;
   }
 
   return (
@@ -27,7 +34,6 @@ function Home({ characters, fetching, error }) {
     </div>
   );
 }
-
 function mapStateToProps(state) {
   return {
     characters: state.chars.array,
@@ -36,4 +42,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = {
+  removeCharacterAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
