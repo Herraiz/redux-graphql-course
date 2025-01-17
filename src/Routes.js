@@ -1,15 +1,15 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Home from './components/home/HomePage'
 import FavPage from './components/favs/FavPage'
 import LoginPage from './components/login/LoginPage'
 
-export default function Routes() {
+export default function AppRoutes() {
     return (
-        <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/favs" component={FavPage} />
-            <Route path="/login" component={LoginPage} />
-        </Switch>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/favs" element={<FavPage />} />
+            <Route path="/login" element={<LoginPage />} />
+        </Routes>
     )
 }

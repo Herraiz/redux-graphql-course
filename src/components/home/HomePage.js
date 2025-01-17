@@ -1,46 +1,39 @@
-import React, { useState, useEffect } from 'react'
-import Card from '../card/Card'
-import styles from './home.module.css'
-import axios from 'axios'
+import React from "react";
+import Card from "../card/Card";
+import styles from "./home.module.css";
+import { connect } from "react-redux";
 
-let URL = "https://rickandmortyapi.com/api"
-
-export default function Home() {
-
-    let [chars, setChars] = useState([])
-
-    useEffect(() => {
-        getCharacters()
-    }, [])
-
-    function nextChar() {
-        chars.shift()
-        if (!chars.length) {
-            //get more characters
-        }
-        setChars([...chars])
+function Home({ characters, fetching, error }) {
+  function renderCharacter() {
+    if (fetching) {
+      return <div>Cargando personajes...</div>;
     }
 
-    function renderCharacter() {
-        let char = chars[0]
-        return (
-            <Card leftClick={nextChar} {...char} />
-        )
+    if (error) {
+      return <div>Error: {error}</div>;
     }
 
-    function getCharacters() {
-        return axios.get(`${URL}/character`)
-            .then(res => {
-                setChars(res.data.results)
-            })
+    if (!characters || characters.length === 0) {
+      return <div>No hay personajes disponibles</div>;
     }
 
-    return (
-        <div className={styles.container}>
-            <h2>Personajes de Rick y Morty</h2>
-            <div>
-                {renderCharacter()}
-            </div>
-        </div>
-    )
+    return <Card {...characters[0]} />;
+  }
+
+  return (
+    <div className={styles.container}>
+      <h2>Personajes de Rick y Morty</h2>
+      <div>{renderCharacter()}</div>
+    </div>
+  );
 }
+
+function mapStateToProps(state) {
+  return {
+    characters: state.chars.array,
+    fetching: state.chars.fetching,
+    error: state.chars.error,
+  };
+}
+
+export default connect(mapStateToProps)(Home);
